@@ -8,10 +8,7 @@
   <link rel="stylesheet" href="tyyli.css">
   <title>To Do -lista</title>
 </head>
-
-
 <body onload="lataaMuistista();">
-
   <h1>Projekti #1 - To Do -lista</h1>
   <div id="tekstikenttä">
     <p>Tämä on Lauran ammattikorkeakoulun Web-sovellusten kehittäminen Javascriptillä -kurssin ensimmäinen projekti,
@@ -26,12 +23,14 @@
     <p id="määrä">Lista on tyhjä.</p>
   </div>
   <h2 id="haluatko">Haluatko lisätä jotain listaan?</h2>
-  <form name="omaLomake1" action="#" onsubmit="" method="">
+  <form name="omaLomake1" action="#" onsubmit="lisääListaan();" method="">
     <span><strong>Otsikko:</strong></span><br><input type="text" name="otsikko" id="otsikko" required /><br />
-    <span><strong>Kommentti:</strong></span><br><textarea name="comment" id="comment" required /></textarea>
+    <span><strong>Kommentti:</strong></span><br><textarea name="comment" id="comment"></textarea>
     <br><input type="button" value="Lähetä" id='nappi' onclick="lisääListaan();" />
   </form>
   <div id="lista"></div>
+  <br>
+  <button id="poistonappi" onclick="tyhjennäLista();">Tyhjennä lista.</button>
 </body>
 <script src="projekti1.js"></script>
 
