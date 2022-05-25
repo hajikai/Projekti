@@ -357,3 +357,130 @@
       }
     }
   }
+
+  function lisääListaan2() {
+    var otsikko = $('#otsikko').value;
+    var kommentti = $('#comment').value;
+
+    // Luodaan muuttujat kenttien otsikosta ja kommentista, jos kentät eivät ole tyhjiä. Otsikkokenttä on pakollinen, joten heitetään window.alert ja korostetaan kenttää punaisella reunalla 
+    // jos se on tyhjä.
+
+    if (otsikko == '') {
+      window.alert('Otsikko on pakollinen. Lisää jotain tekstiä otsikkokenttään.');
+      otsikkoInput = $('#otsikko');
+      $('#otsikko').css('border', '2px solid red');
+      otsikkoInput.click( function () {
+        otsikkoInput.css('border', 'none');
+      })
+      // otsikkoInput.addEventListener('click', function (e) {
+      // otsikkoInput.style.border = '';
+      // })
+    } else {
+
+      // Tarkistetaan tukeeko selain localStorage / sessionStorage -toimintoja - jos tukee niin sitten luodaan otsikko ja kommentti -muuttujista HTML-elementit.
+
+      if (typeof (Storage) !== "undefined") {
+
+        const otsikkokenttä = $('h2', {
+          html: otsikko,
+          "class": 'otsikko',
+        });
+        // const otsikkokenttä = document.createElement('h2');
+        // const otsikkoteksti = document.createTextNode(otsikko);
+        // var a = document.createAttribute("class");
+        // a.value = 'otsikko';
+        // otsikkokenttä.setAttributeNode(a);
+        // otsikkokenttä.appendChild(otsikkoteksti);
+
+
+        // Luotiin otsikolle 'h2'-elementti sekä TextNode tekstikentän arvolla.
+        // Määriteltiin otsikon 'h2'-elementille attribuutti 'class' arvolla 'otsikko', jotta localStorageen tallennus onnistuu helpommin.
+        // Lisätään olennainen TextNode 'h2'-elementtiin.
+        const kommenttikenttä = $('p', {
+          html: kommentti,
+          "class": "kommentti",
+        });
+        // const kommenttikenttä = document.createElement('p');
+        // const kommenttiteksti = document.createTextNode(kommentti);
+        // var b = document.createAttribute("class");
+        // b.value = 'kommentti';
+        // kommenttikenttä.setAttributeNode(b);
+        // kommenttikenttä.appendChild(kommenttiteksti);
+        kommenttikenttä.css({
+          fontWeight: "bold",
+          fontSize: "13px"
+      });
+        // kommenttikenttä.style.fontWeight = 'bold';
+        // kommenttikenttä.style.fontSize = '13px';
+
+        // Luotiin kommentille 'p'-elementti sekä TextNode tekstikentän arvolla.
+        // Määriteltiin kommentin 'p'-elementille attribuutti 'class' arvolla 'kommentti', jotta localStorageen tallennus onnistuu helpommin.
+        // Lisätään olennainen TextNode 'p'-elementtiin.
+
+        const tärkeäKenttä = $('button', {
+          html: 'Merkitse tehdyksi',
+          "class": "done"
+        });
+
+        // const tärkeäKenttä = document.createElement('button');
+        // const tärkeäTeksti = document.createTextNode('Merkitse tehdyksi.');
+        // const tunnus2 = document.createAttribute('class');
+        // tunnus2.value = 'done';
+        // tärkeäKenttä.setAttributeNode(tunnus2);
+        // tärkeäKenttä.appendChild(tärkeäTeksti);
+
+        // var lista = document.getElementById("lista");
+        var lista = $("#lista");
+
+        // lista on jo sivulta löytyvä isompi DIV-elementti ID:llä 'lista', jonka sisään jokainen To Do -item menee dynaaminentausta-nimisen DIV-elementissä.
+
+        const dynaaminentausta = $('div', {
+          "class": "tausta"
+        });
+
+        dynaaminentausta.css({
+          width: "500px",
+          height: "fit-content",
+          padding: '2px',
+          borderStyle: 'outset'
+      });
+
+        // const dynaaminentausta = document.createElement('div');
+        // const tunnus = document.createAttribute('class');
+        // tunnus.value = 'tausta';
+        // dynaaminentausta.setAttributeNode(tunnus);
+        // dynaaminentausta.style.width = '500px';
+        // dynaaminentausta.style.height = 'fit-content';
+        // dynaaminentausta.style.padding = '2px';
+        // dynaaminentausta.style.borderStyle = 'outset';
+
+        // Luodaan 'dynaaminentausta' DIV-elementti ja määritellään sille attribuutti 'id' arvolla 'tausta + i' debugaussyistä.
+        // Samalla muokataan 'dynaaminentausta' DIV-elementin tyyliä mm. width, margin ja padding.
+
+        otsikkokenttä.appendTo(dynaaminentausta);
+        kommenttikenttä.appendTo(dynaaminentausta);
+        tärkeäKenttä.appendTo(dynaaminentausta);
+        // dynaaminentausta.appendChild(otsikkokenttä);
+        // dynaaminentausta.appendChild(kommenttikenttä);
+        // dynaaminentausta.appendChild(tärkeäKenttä);
+
+
+        // Lisätään otsikko, kommentti sekä poistonappi dynaamiseen taustaan.
+
+        dynaaminentausta.appendTo(lista);
+        // lista.appendChild(dynaaminentausta);
+
+        // Lisätään dynaaminentausta sivulta löytyvään taustaan, jotta To Do -item ilmestyy sivulle.
+
+        tallennaMuistiin();
+        // Ajetaan tallennaMuistiin()-funktio, jotta uusi To Do -item pääsee localStorageen.
+
+        window.location.reload();
+
+      } else {
+        window.alert('Selaimesi ei tue localStoragea.');
+
+        // Jos selain ei tue localStorage / sessionStorage niin sivusto hälyttää käyttäjää eikä käyttö onnistu.
+      }
+    }
+  }
